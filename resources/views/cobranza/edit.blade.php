@@ -2,9 +2,15 @@
 @section('content')
 
 <ol class="breadcrumb">
+<<<<<<< HEAD
 	<li><a href="{{url('principal')}}">Inicio</a></li>
 	<li><a href="{{ URL::to('cobranza/Todos/main') }}">Cobranza</a></li>
 	<li><a class="active">Cobranza - {{$moduloName}}</a></li>
+=======
+  <li><a href="{{url('principal')}}">Inicio</a></li>
+  <li><a href="{{ URL::to('cobranza/Todos/main') }}">Cobranza</a></li>
+  <li><a class="active">Cobranza - {{$moduloName}}</a></li>
+>>>>>>> 719e58c324045f96841df17fe3e5ddd1116948c6
 </ol>
 
 <div class="row" id="box-wrapper">
@@ -16,7 +22,11 @@
 				<h3 class="box-title">Cobranza</h3>
 			</div><!-- /.box-header -->
 			<!-- form start -->
+<<<<<<< HEAD
 			
+=======
+
+>>>>>>> 719e58c324045f96841df17fe3e5ddd1116948c6
 			<div class="box-body"  id="container">
 				<div class="form-horizontal">
 					<div class="form-group">
@@ -186,6 +196,7 @@
 				            <th style="min-width:150px">Acción</th>
 			            </thead>
 			            <tbody>
+<<<<<<< HEAD
 							{{-- Si es por dacion, $cobro->pagos viene vacio entonces no puede mostrar esa collecion  --}}
 							@if($cobro->pagos->isEmpty() == true)
 								@foreach($cobro->pagos as $pago)
@@ -209,6 +220,23 @@
   
 
 
+=======
+                            @foreach($cobro->pagos as $pago)
+                                <tr class="pago" data-object="{{$pago->toJson()}}">
+                                    <td>{{$pago->fecha}}</td>
+                                    <td>{{$pago->banco->nombre}}</td>
+                                    <td>{{$pago->cuenta->descripcion}}</td>
+                                    <td>{{$pago->tipo}}</td>
+                                    <td>{{$pago->ncomprobante}}</td>
+                                    <td>{{$traductor->format($pago->monto)}}</td>
+                                    <td class="text-center">
+                                        <button class='btn btn-warning edit-payment-btn'><span class='glyphicon glyphicon-pencil'></span></button>
+                                        <button class='btn btn-danger remove-payment-btn'><span class='glyphicon glyphicon-minus'></span></button>
+                                    </td>
+                                </tr>
+
+                            @endforeach
+>>>>>>> 719e58c324045f96841df17fe3e5ddd1116948c6
 							@if($ajusteCliente < 0)
 								<tr class="pago">
 									<td></td>
