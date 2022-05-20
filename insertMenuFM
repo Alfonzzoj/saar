@@ -1,0 +1,1 @@
+INSERT INTO `permissions` (`id`, `name`, `slug`, `description`, `model`, `created_at`, `updated_at`) VALUES (NULL, 'Menú Facturación Manual (DOSAS)', 'menu.facturacionManual', NULL, NULL, '0000-00-00 00:00:00.000000', '0000-00-00 00:00:00.000000');

@@ -1,0 +1,9 @@
+<?php 
+	function sql($sql){
+		$mysql=mysql_connect('localhost','root','cvgin123');
+		if(!mysql_select_db('intranet',$mysql))return false;
+		$resul=mysql_query($sql,$mysql);
+		mysql_close($mysql);		
+		return $resul;	
+	}
+?>

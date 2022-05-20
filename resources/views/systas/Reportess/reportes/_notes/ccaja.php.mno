@@ -1,0 +1,5 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<info>
+	<infoitem key="UD_Recordset1" value="name:ID;datatype:int,name:encargado;datatype:string,name:codbarras;datatype:string,name:fVer;datatype:string,name:hVer;datatype:time,name:serie;datatype:blob,name:codtas;datatype:string" />
+	<infoitem key="UD_conexion" value="name:ID;datatype:int,name:encargado;datatype:string,name:codbarras;datatype:string,name:fVer;datatype:string,name:hVer;datatype:time,name:serie;datatype:blob,name:codtas;datatype:string" />
+</info>
