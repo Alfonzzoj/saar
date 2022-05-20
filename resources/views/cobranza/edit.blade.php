@@ -110,6 +110,7 @@
                             {{--</td>--}}
                         {{--</tr>--}}
                         {{--@endif--}}
+						{{-- nuevo commit  --}}
 			            @foreach($cobro->facturas as $factura)
                             <tr class="success" data-id="{{$factura->id}}" data-retencionfecha="{{ $factura->pivot->retencionFecha }}" data-retencioncomprobante="{{ $factura->pivot->retencionComprobante }}" data-is-retencion-editable=1
                             data-islrper="'+metadata.islrpercentage+'" data-ivaper="'+metadata.ivapercentage+'"
