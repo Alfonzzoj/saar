@@ -21,3 +21,4 @@ Homestead.json
 .rocketeer/
 
 BackupsBDD/
+*.sql

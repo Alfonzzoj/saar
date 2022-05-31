@@ -9,3 +9,4 @@
 # Facturas anuladas 
 1. agregar columna status
 2. en tabla modulos agregar fila id 25 con el modulo anuladas
+3. LA 26 tambien 
