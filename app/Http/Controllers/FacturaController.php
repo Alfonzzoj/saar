@@ -562,6 +562,8 @@ class FacturaController extends Controller {
 
 
         $factura->update(['comentario' => $request->comentario]);
+        $factura->update(['status' => 'Anulada']);
+        $factura->update(['estado' => 'A']);
 
         $despegue = \App\Despegue::where('factura_id', $factura->id)->first();
 
@@ -579,12 +581,15 @@ class FacturaController extends Controller {
             }else{
                 return ["success"=>0, "text"=>"No se pudo anular la factura."];
             }
+        }else{
+            return ["success"=>1, "text"=>"Anulacion OK "];
+
         }
 
-        if($factura->delete())
-            return ["success"=>1, "text"=>"La factura se ha anulado con éxito."];
-        else
-            return ["success"=>0, "text"=>"No se pudo anular la factura."];
+        // if($factura->delete())
+        //     return ["success"=>1, "text"=>"La factura se ha anulado con éxito."];
+        // else
+        //     return ["success"=>0, "text"=>"No se pudo anular la factura."];
 	}
 
     public function facturaManual($modulo,Factura $factura){

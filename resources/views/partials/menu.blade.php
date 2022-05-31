@@ -68,6 +68,11 @@
 				@permission('menu.aeronave')
 				<li {{ (\Request::is('maestros/aeronaves*'))?"class=active":"" }}><a href="{{ URL::to('maestros/aeronaves') }}"><i class="fa fa-plane"></i> Aeronaves</a></li>
 				@endpermission
+				@permission('menu.aeronave')
+
+				<li {{ (\Request::is('maestros/fbos*'))?"class=active":"" }}><a href="{{ URL::to('maestros/fbos') }}"><i class="glyphicon glyphicon-user"></i> Fbos</a></li>
+				@endpermission
+
 			</ul>
 		</li>
 		@endpermission

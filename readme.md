@@ -1,27 +1,62 @@
-## Laravel PHP Framework
+# Proyecto Saar
+Proyecto laravel para el aeropuerto manuel piar puerto ordaz
 
-[![Build Status](https://travis-ci.org/laravel/framework.svg)](https://travis-ci.org/laravel/framework)
-[![Total Downloads](https://poser.pugx.org/laravel/framework/d/total.svg)](https://packagist.org/packages/laravel/framework)
-[![Latest Stable Version](https://poser.pugx.org/laravel/framework/v/stable.svg)](https://packagist.org/packages/laravel/framework)
-[![Latest Unstable Version](https://poser.pugx.org/laravel/framework/v/unstable.svg)](https://packagist.org/packages/laravel/framework)
-[![License](https://poser.pugx.org/laravel/framework/license.svg)](https://packagist.org/packages/laravel/framework)
+## Informacion / datos
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as authentication, routing, sessions, queueing, and caching.
+1. **Conexion SSH**
+	- Usuario: root
+	- Host: 172.16.2.108
+	- Pass: Centos2015
+	- ruta de proyecto : /var/www/html/saar
 
-Laravel is accessible, yet powerful, providing powerful tools needed for large, robust applications. A superb inversion of control container, expressive migration system, and tightly integrated unit testing support give you the tools you need to build any application with which you are tasked.
+	### Como conectarse
 
-## Official Documentation
+   1. Ejecutar `ssh root@172.16.2.108`
+   2. Insertar clave 
+---
 
-Documentation for the framework can be found on the [Laravel website](http://laravel.com/docs).
+2. **BDD mysql (server) :**
 
-## Contributing
+- User: vmpradob
+- Pass: 24559444
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](http://laravel.com/docs/contributions).
+	### Como conectarse
+	
+	1. Entrar por SSH 
+	2. Ir a la ruta `cd /var/www/html` 
+	3. Ejecutar `mysql -uvmpradob -p ` e ingresar el password
 
-## Security Vulnerabilities
+---
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
+### Exportar Base de datos (Realizar respaldo)
 
-### License
+1. Conectarse por SSH
+2. Entrar a la ruta `cd /var/www/html`
+3.  `mysqldump -u vmpradob -p saar > nombre_del_exportado.sql`
+4. Salir de SSH (`$ exit`)
+5. Copiar con scp el archivo a local, desde el pc 
+`scp root@172.16.2.108:/var/www/html/nombre_del_exportado.sql Descargas`
+Ingresar la password del user , en este caso Centos2015
 
-The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
+### Importar base de datos (Ingresar la base de datos al local)
+1. Realizar el backup del server 
+2. Mover el backup al proyecto, y abrir una terminal dentro del proyecto
+3. copiar el archivo sql al contenedor `sudo docker cp nombre_del_exportado.sql mysql-5.6:/` 
+4. Entrar a la consola del contenedor docker `sudo docker exec -it mysql-5.6 /bin/bash`
+5. Ejecutar comando de importacion `mysql -uroot -p saar < bddfbo.sql` (para alfonzzoj la la pw root es root)
+
+
+## Comandos necesarios para ejecutar el proyecto en linux:
+
+1. Detener y desabilitar mysql local 
+	`sudo systemctl stop mysql`
+	`sudo systemctl disable mysql`
+2. Encender mysql docker
+	    `sudo docker start mysql-5.6`
+
+3. `sudo php artisan serve`
+
+## Errores comunes:
+
+- ssh: connect to host 172.16.2.108 port 22: Connection refused
+		No tiene coneccion ethernet

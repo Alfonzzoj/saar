@@ -149,6 +149,8 @@
 											        Pendiente
                                                 @elseif($factura->estado=='C')
                                                     Pagada
+												@elseif($factura->estado=='A')
+													Anulada
                                                 @endif
 											</td>
 											<td class='text-justify'>{{$factura->fecha}}</td>
@@ -258,7 +260,8 @@
 				                        try{
 				                            var obj= JSON.parse(responseObject.responseText);
 				                            if(obj.success==1){
-				                                $(tr).remove();
+				                                // $(tr).remove();
+												$(tr).find("td:eq(4)").html("Anulada");
 				                                alertify.success(obj.text);
 				                            }else if(obj.success==0)
 				                                alertify.error(obj.text);

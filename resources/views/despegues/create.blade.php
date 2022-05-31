@@ -145,6 +145,19 @@
 									</div><!-- /.input group -->
 								</div>
 							</div>	
+							<div class="form-group" style="margin-top: 20px">
+								<div class="input-group">
+									<div class="input-group-addon">
+										<i class="fa fa-user"></i>
+									</div>     
+									<select name="fbo_id" id="fbo_id-flt" class="form-control cliente" >
+										<option value="">-- FBO --</option>
+										@foreach ($fbos as $index=>$fbo)
+										<option value="{{$fbo->id}}" > {{$fbo->nombre}}</option>
+										@endforeach
+									</select>
+								</div><!-- /.input group -->
+							</div>  
 							@if($aterrizaje->tipoMatricula_id!="4")         
 							<hr>
 							<h5>
@@ -510,6 +523,7 @@ $(document).ready(function(){
 	$('#piloto_id-select').chosen({width:'200px'});
 	$('#puerto_id-select').chosen({width:'140px'});
 	$('#cliente_id-select').chosen({width:'500px'});
+	$('#fbo_id-flt').chosen({width:'500px'});
 
 	filtro();
 

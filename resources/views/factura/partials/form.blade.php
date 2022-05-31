@@ -12,9 +12,9 @@
 			{!! Form::hidden('aplica_minimo_aterrizaje', 0) !!}
 			{!! Form::hidden('aplica_minimo_estacionamiento', 0) !!}
 			@if($modulo_id=="9" || $modulo_id=="4" || $modulo_id == "2")
-				{!! Form::select('condicionPago', ["Contado"=>"Contado","Crédito" => "Crédito"], null, [ 'id' =>'condicionPago', 'class'=>"form-control", $disabled, (!$factura->isImpresa)?"":"readonly"]) !!}
+				{!! Form::select('condicionPago', ["Contado"=>"Contado","Crédito" => "Crédito","Exonerado" => "Exonerado"], null, [ 'id' =>'condicionPago', 'class'=>"form-control", $disabled, (!$factura->isImpresa)?"":"readonly"]) !!}
 			@else
-				{!! Form::select('condicionPago', ["Crédito" => "Crédito", "Contado"=>"Contado"], null, [ 'id' =>'condicionPago', 'class'=>"form-control", $disabled, (!$factura->isImpresa)?"":"readonly"]) !!}
+				{!! Form::select('condicionPago', ["Crédito" => "Crédito", "Contado"=>"Contado","Exonerado" => "Exonerado"], null, [ 'id' =>'condicionPago', 'class'=>"form-control", $disabled, (!$factura->isImpresa)?"":"readonly"]) !!}
 			@endif
 		@else		
 		{!! Form::text('condicionPago', $condicionPago, [ 'id' =>'condicionPago', 'class'=>"form-control", $disabled, 'readonly']) !!}

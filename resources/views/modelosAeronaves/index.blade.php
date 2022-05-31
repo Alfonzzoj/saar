@@ -176,6 +176,9 @@ $(document).ready(function(){
     	$('#filtrar-btn').click(function(e){
     		e.preventDefault();
     		var data=$(this).closest('form').serialize();
+			console.log(data)
+			console.log("{{action('ModeloAeronaveController@index')}}?"+data)
+
     		getTable("{{action('ModeloAeronaveController@index')}}?"+data);
     	}).trigger('click');
 

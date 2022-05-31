@@ -31,6 +31,17 @@
 	</div>
 </div>
 <div class="form-group">
+	<label for="fbo_id-select" class="col-sm-2 control-label">fbo</label>
+	<div class="col-sm-10">
+		<select name="fbo_id" class="form-control fbo">
+			<option value="">--Sin Fbo--</option>
+			@foreach ($fbos as $index=>$fbo)
+			<option value="{{$fbo->id}}" {{(($despegue->fbo_id == $fbo->id)?"selected":"")}}> {{$fbo->nombre}}</option>
+			@endforeach
+		</select>
+	</div>
+</div>
+<div class="form-group">
 	<label for="puerto_id-select" class="col-sm-2 control-label">Destino</label>
 	<div class="col-sm-10">               
 		<select name="puerto_id" class="form-control puerto">

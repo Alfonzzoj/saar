@@ -131,6 +131,8 @@ Route::group(['prefix' => 'maestros/'], function () {
     Route::resource('puertos', 'PuertoController');
     Route::resource('hangares', 'HangarController');
     Route::resource('aeronaves', 'AeronaveController');
+    Route::resource('fbos', 'FboController');
+
 });
 
 //

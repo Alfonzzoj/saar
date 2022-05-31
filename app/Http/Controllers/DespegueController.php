@@ -33,6 +33,7 @@ use App\DiaFeriado;
 use Carbon\Carbon;
 use Validator;
 use App\Estacionamiento;
+use App\Fbo;
 
 class DespegueController extends Controller
 {
@@ -62,7 +63,9 @@ class DespegueController extends Controller
             $despegues->with('factura');
             $totalDespegues = $despegues->count();
             $despegues      = $despegues->paginate(7);
-            return view('despegues.partials.table', compact('despegues', 'totalDespegues'));
+            $fbos                = Fbo::all();
+
+            return view('despegues.partials.table', compact('despegues', 'totalDespegues',"fbos"));
         } else {
             $aterrizajes         = Aterrizaje::all();
             $aeronaves           = Aeronave::all();
@@ -74,9 +77,10 @@ class DespegueController extends Controller
             $otrosCargos         = OtrosCargo::all();
             $today               = Carbon::now();
             $today->timezone     = 'America/New_York';
+            $fbos                = Fbo::all();
 
 
-            return view("despegues.index", compact("aterrizajes", "otrosCargos", "nacionalidad_vuelos", "tipoMatriculas", "aeronaves", "puertos", "pilotos", "today"));
+            return view("despegues.index", compact("aterrizajes", "otrosCargos", "nacionalidad_vuelos", "tipoMatriculas", "aeronaves", "puertos", "pilotos", "today","fbos"));
         }
     }
 
@@ -102,6 +106,8 @@ class DespegueController extends Controller
         $aeronaves           = Aeronave::all();
         $tipoMatriculas      = TipoMatricula::all();
         $today               = Carbon::now();
+        $fbos                = Fbo::all();
+
         $today->timezone     = 'America/New_York';
 
         //FILTRO OTROS CARGOS
@@ -127,7 +133,7 @@ class DespegueController extends Controller
             ->where('tipo_matricula', $tipo_matricula)
             ->orderBy('nombre_cargo')->lists('nombre_cargo', 'id');
 
-        return view("despegues.create", compact("aterrizaje", "hangarLocal", "otrosCargos", "nacionalidad_vuelos", "tipoMatriculas", "aeronaves", "puertos", "pilotos", "today"));
+        return view("despegues.create", compact("aterrizaje", "hangarLocal", "otrosCargos", "nacionalidad_vuelos", "tipoMatriculas", "aeronaves", "puertos", "pilotos", "today","fbos"));
     }
 
     public function filtro(Request $request)
@@ -221,14 +227,18 @@ class DespegueController extends Controller
             $puertoID  = $puerto = Puerto::find($request->get("puerto_id"));
             $pilotoID  = $piloto = Piloto::find($request->get("piloto_id"));
             $clienteID = $cliente = Cliente::find($request->get("cliente_id"));
+            $fboID = $fbo = Fbo::find($request->get("fbo_id"));
 
             $puertoID  = ($puertoID) ? $puerto->id : NULL;
             $pilotoID  = ($pilotoID) ? $piloto->id : NULL;
             $clienteID = ($clienteID) ? $cliente->id : NULL;
+            $fboID = ($fboID) ? $fbo->id : NULL;
+
 
             $despegue->puerto_id            = $puertoID;
             $despegue->piloto_id            = $pilotoID;
             $despegue->cliente_id           = $clienteID;
+            $despegue->fbo_id               = $fboID;
             $despegue->save();
 
             return response()->json(array(
@@ -275,8 +285,10 @@ class DespegueController extends Controller
         $nacionalidad_vuelos = NacionalidadVuelo::all();
         $aeronaves           = Aeronave::all();
         $tipoMatriculas      = TipoMatricula::all();
+        $fbos                = Fbo::all();
+
         $otrosCargos         = OtrosCargo::lists('nombre_cargo', 'id');
-        return view("despegues.partials.edit", compact("despegue", "otrosCargos", "nacionalidad_vuelos", "tipoMatriculas", "aeronaves", "puertos", "pilotos"));
+        return view("despegues.partials.edit", compact("despegue", "otrosCargos", "nacionalidad_vuelos", "tipoMatriculas", "aeronaves", "puertos", "pilotos","fbos"));
     }
 
     /**

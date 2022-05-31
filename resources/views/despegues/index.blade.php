@@ -92,6 +92,7 @@
 								</div><!-- /.input group -->
 							</div>  
 
+
 							
 							<button type="submit" id="filtrar-btn" class="btn btn-primary pull-right" style="margin-left: 20px"><i class="fa fa-filter"></i></button>
 						</form>
@@ -114,7 +115,6 @@
 	 			</div><!-- /.box -->
 	 		</div><!-- /.col -->
 	 	</section>
-
 	 	<!-- Modal de edición -->
 
 	 	<div class="modal fade" id="show-modal" tabindex="-1" role="dialog" aria-labelledby="editarDespegue-modalLabel" aria-hidden="true">
