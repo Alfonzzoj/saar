@@ -66,7 +66,9 @@
 </tr>
 <tr>
 <td colspan="7">
-		<strong>FBO:</strong> {{$despegue->fbo}}
+	@if ($despegue->fbo_id != null)
+	<strong>FBO:</strong> {{$despegue->fbo}}
+	@endif
 </td>
 <td colspan="3">
 <strong>TELÉFONO:</strong> {{$factura->cliente->telefonos}}

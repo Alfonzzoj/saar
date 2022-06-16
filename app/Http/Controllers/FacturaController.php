@@ -168,9 +168,11 @@ class FacturaController extends Controller {
         //
         if($despegue){
             $pdf->SetFont('helvetica', '', '10', true);
-            $fbo = Fbo::where('id',$despegue->fbo_id)->first();
-            $fbo_nombre = $fbo->nombre;
-            $despegue->fbo = $fbo_nombre;
+            if ($despegue->fbo_id != null) {
+                $fbo = Fbo::where('id',$despegue->fbo_id)->first();
+                $fbo_nombre = $fbo->nombre;
+                $despegue->fbo = $fbo_nombre;
+            }
 
             $html = view('pdf.dosa', compact('factura', 'despegue', 'traductor'))->render();
         }else{
