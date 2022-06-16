@@ -4,6 +4,7 @@ use App\Http\Requests;
 use App\Http\Requests\FacturaRequest;
 use App\Http\Controllers\Controller;
 use \App\Factura;
+use App\Fbo;
 use App\MontosFijo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
@@ -167,6 +168,10 @@ class FacturaController extends Controller {
         //
         if($despegue){
             $pdf->SetFont('helvetica', '', '10', true);
+            $fbo = Fbo::where('id',$despegue->fbo_id)->first();
+            $fbo_nombre = $fbo->nombre;
+            $despegue->fbo = $fbo_nombre;
+
             $html = view('pdf.dosa', compact('factura', 'despegue', 'traductor'))->render();
         }else{
             $pdf->SetFont('helvetica', '', '10', '', true);

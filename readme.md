@@ -7,7 +7,7 @@ Proyecto laravel para el aeropuerto manuel piar puerto ordaz
 	- Usuario: root
 	- Host: 172.16.2.108
 	- Pass: Centos2015
-	- ruta de proyecto : /var/www/html/saar
+	- ruta de proyecto : cd /var/www/html/saar
 
 	### Como conectarse
 

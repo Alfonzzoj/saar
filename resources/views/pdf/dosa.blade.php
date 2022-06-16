@@ -58,12 +58,15 @@
 <td  colspan="7">
 <strong>CLIENTE:</strong> {{$factura->cliente->nombre}}
 </td>
+
+
 <td  colspan="3">
 <strong>RIF:</strong> {{($factura->cliente)?$factura->cliente->rif:"N/A"}}
 </td>
 </tr>
 <tr>
 <td colspan="7">
+		<strong>FBO:</strong> {{$despegue->fbo}}
 </td>
 <td colspan="3">
 <strong>TELÉFONO:</strong> {{$factura->cliente->telefonos}}
