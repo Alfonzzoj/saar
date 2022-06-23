@@ -2,15 +2,9 @@
 @section('content')
 
 <ol class="breadcrumb">
-<<<<<<< HEAD
-	<li><a href="{{url('principal')}}">Inicio</a></li>
-	<li><a href="{{ URL::to('cobranza/Todos/main') }}">Cobranza</a></li>
-	<li><a class="active">Cobranza - {{$moduloName}}</a></li>
-=======
   <li><a href="{{url('principal')}}">Inicio</a></li>
   <li><a href="{{ URL::to('cobranza/Todos/main') }}">Cobranza</a></li>
   <li><a class="active">Cobranza - {{$moduloName}}</a></li>
->>>>>>> 719e58c324045f96841df17fe3e5ddd1116948c6
 </ol>
 
 <div class="row" id="box-wrapper">
@@ -22,11 +16,6 @@
 				<h3 class="box-title">Cobranza</h3>
 			</div><!-- /.box-header -->
 			<!-- form start -->
-<<<<<<< HEAD
-			
-=======
-
->>>>>>> 719e58c324045f96841df17fe3e5ddd1116948c6
 			<div class="box-body"  id="container">
 				<div class="form-horizontal">
 					<div class="form-group">
