@@ -438,6 +438,7 @@ class FacturaController extends Controller {
                         $carga->factura_id = $factura->id;
                         $carga->save();
                     }
+                    
                     $impresion=action('FacturaController@getPrint', [$moduloNombre, $factura->id]);                
             });
             return ["success" => 1, "impresion" => $impresion];

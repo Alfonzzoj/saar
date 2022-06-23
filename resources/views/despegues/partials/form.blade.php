@@ -99,7 +99,7 @@
 						<option value="Crédito"> Crédito</option>
 						@else
 						<option value="{{$despegue->condicionPago}}">{{$despegue->condicionPago}}</option>
-						<option value="Exonerada"> Exonerada</option>
+						<option value="Exonerado"> Exonerado</option>
 						<option value="Contado"> Contado</option>
 						<option value="Crédito"> Crédito</option>
 					@endif

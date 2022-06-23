@@ -400,6 +400,7 @@ class DespegueController extends Controller
     public function getCrearFactura($id)
     {
         //DIA FERIADO
+        
         $hoy = Carbon::now();
         $dia = $hoy->format('d');
         $mes = $hoy->format('m');
@@ -408,10 +409,15 @@ class DespegueController extends Controller
         $despegue               = Despegue::find($id);
         $tipo_matricula = $despegue->aterrizaje->aeronave->tipo_id;
         $factura                = new Factura();
-        $modulo                 = \App\Modulo::find(5)->nombre;
 
         $euro                  = MontosFijo::where('aeropuerto_id', session('aeropuerto')->id)->first()->euro_oficial;
         $condicionPago          = $despegue->condicionPago;
+        if ($condicionPago = 'Exonerado') {
+            $modulo                 = \App\Modulo::find(26)->nombre;
+        }else{
+            $modulo                 = \App\Modulo::find(5)->nombre;
+
+        }
         $peso                   = ($despegue->aterrizaje->aeronave->peso) / 1000;
         $peso_aeronave          = ceil($peso);
         $mensajeEstacionamiento = ' ';
@@ -443,7 +449,7 @@ class DespegueController extends Controller
             'cliente_id'    => $despegue->cliente_id,
             'nroDosa'       => $nroDosa
         ]);
-
+        
         $factura->detalles = new Collection();
 
         //Ítem de Formulario.
@@ -459,8 +465,11 @@ class DespegueController extends Controller
                 case 'Crédito':
                     $concepto_id  = CargosVario::where('aeropuerto_id', session('aeropuerto')->id)->wherein('formularioCredito_id', $conceptosAmb)->Orwherein('formularioCredito_id', $conceptosCre)->firstOrFail()->formularioCredito_id;
                     break;
-            }
-
+                case 'Exonerado':
+                    $concepto_id=1;
+                    break;
+                }
+                
             //ID-246 ES VENEZUELA, NACIONALIDAD NACIONAL Y TODO LO DEMAS ES INTERNACIONAL
             if ($despegue->aeronave->nacionalidad_id == 246)
                 $montoDes      = $precio_formulario + 0;
@@ -471,7 +480,7 @@ class DespegueController extends Controller
             $iva               = Concepto::find($concepto_id)->iva;
             $montoIva          = ($iva * $montoDes) / 100;
             $totalDes          = $montoDes + $montoIva;
-
+            
             //SI FERIADO - SI EL CONCEPTO EXISTE Y SI ACEPTA RECARGO - TIPO MATRICULA - ID 3 - MATRICULA COMERCIAL EXCENTO DE RECARGO SEGUN GACETA (DECRETO MARZO 2018)
             $concepto      = Concepto::find($concepto_id);
             if (isset($feriado) && isset($concepto) && ($concepto->recargo == 'SI') && ($tipo_matricula != 3)) {
@@ -484,19 +493,22 @@ class DespegueController extends Controller
         }
 
         //Ítem de Estacionamiento.
-
+        
         if ($despegue->cobrar_estacionamiento == '1') {
             $estacionamiento = new Facturadetalle();
             $nacionalidad    = $despegue->aterrizaje->nacionalidadVuelo_id;
             $tipoVuelo       = $despegue->aterrizaje->tipoMatricula_id;
-
-
+            
+            
             switch ($condicionPago) {
                 case 'Contado':
                     $concepto_id     = EstacionamientoAeronave::where('aeropuerto_id', session('aeropuerto')->id)->wherein('conceptoContado_id', $conceptosAmb)->Orwherein('conceptoContado_id', $conceptosCon)->firstOrFail()->conceptoContado_id;
                     break;
                 case 'Crédito':
                     $concepto_id     = EstacionamientoAeronave::where('aeropuerto_id', session('aeropuerto')->id)->wherein('conceptoCredito_id', $conceptosAmb)->Orwherein('conceptoCredito_id', $conceptosCre)->firstOrFail()->conceptoCredito_id;
+                    break;
+                case 'Exonerado':
+                    $concepto_id = 1;
                     break;
             }
 
@@ -535,9 +547,9 @@ class DespegueController extends Controller
                             $minimo = ($aplicaMinimo == 1) ? EstacionamientoAeronave::where('aeropuerto_id', session('aeropuerto')->id)->first()->eq_bloqueMinimoNac_general : 0;
                             $tipoEstacionamiento  = 'Nacional';
                             break;
-                        case 2:
-                            $minutosLibre           = EstacionamientoAeronave::where('aeropuerto_id', session('aeropuerto')->id)->first()->tiempoLibreInt_general;
-                            $eq_bloque              = EstacionamientoAeronave::where('aeropuerto_id', session('aeropuerto')->id)->first()->eq_bloqueInt_general;
+                            case 2:
+                                $minutosLibre           = EstacionamientoAeronave::where('aeropuerto_id', session('aeropuerto')->id)->first()->tiempoLibreInt_general;
+                                $eq_bloque              = EstacionamientoAeronave::where('aeropuerto_id', session('aeropuerto')->id)->first()->eq_bloqueInt_general;
                             $precio_estacionamiento = EstacionamientoAeronave::where('aeropuerto_id', session('aeropuerto')->id)->first()->precio_estInt_general;
                             $minutosBloque          = EstacionamientoAeronave::where('aeropuerto_id', session('aeropuerto')->id)->first()->minBloqueInt_general;
                             $aplicaMinimo           = EstacionamientoAeronave::where('aeropuerto_id', session('aeropuerto')->id)->first()->aplicar_minimo_int_general;
@@ -593,7 +605,7 @@ class DespegueController extends Controller
                     }
                 }
             }
-
+            
 
 
             $tiempo_estacionamiento = $despegue->tiempo_estacionamiento;
@@ -678,6 +690,9 @@ class DespegueController extends Controller
                     break;
                 case 'Crédito':
                     $concepto_id     = PreciosAterrizajesDespegue::where('aeropuerto_id', session('aeropuerto')->id)->wherein('conceptoCredito_id', $conceptosAmb)->Orwherein('conceptoCredito_id', $conceptosCre)->firstOrFail()->conceptoCredito_id;
+                    break;
+                case 'Exonerado':
+                    $concepto_id=1;
                     break;
             }
 
@@ -920,6 +935,9 @@ class DespegueController extends Controller
                 case 'Crédito':
                     $concepto_id     = CargosVario::where('aeropuerto_id', session('aeropuerto')->id)->wherein('abordajeCredito_id', $conceptosAmb)->Orwherein('abordajeCredito_id', $conceptosCre)->firstOrFail()->abordajeCredito_id;
                     break;
+                case 'Exonerado':
+                    $concepto_id=1;
+                    break;
             }
 
 
@@ -964,6 +982,10 @@ class DespegueController extends Controller
                 case 'Crédito':
                     $concepto_id     = PreciosCarga::where('aeropuerto_id', session('aeropuerto')->id)->wherein('conceptoCredito_id', $conceptosAmb)->Orwherein('conceptoCredito_id', $conceptosCre)->firstOrFail()->conceptoCredito_id;
                     break;
+                    case 'Exonerado':
+                        $concepto_id=1;
+                        break;
+    
             }
 
             $pesoEmb      = $despegue->peso_embarcado;
@@ -1006,6 +1028,10 @@ class DespegueController extends Controller
                 case 'Crédito':
                     $concepto_id            = CargosVario::where('aeropuerto_id', session('aeropuerto')->id)->wherein('habilitacionCredito_id', $conceptosAmb)->Orwherein('habilitacionCredito_id', $conceptosCre)->firstOrFail()->habilitacionCredito_id;
                     break;
+                    case 'Exonerado':
+                        $concepto_id=1;
+                        break;
+    
             }
 
             $montoDes     = $precio_derechoHabilitacion + 0;
@@ -1045,6 +1071,10 @@ class DespegueController extends Controller
                     case 'Crédito':
                         $concepto_id            = $oc->conceptoCredito_id;
                         break;
+                        case 'Exonerado':
+                            $concepto_id=1;
+                            break;
+        
                 }
 
                 /*$precioTotal = 0;
@@ -1091,8 +1121,13 @@ class DespegueController extends Controller
         }
 
         $diasVencimientoCred = \App\OtrasConfiguraciones::where('aeropuerto_id', session('aeropuerto')->id)->first()->diasVencimientoCred;
+        if ($condicionPago == "Exonerado") {
+            $modulo_id = 26;
+            
+        }else{
+            $modulo_id = $modulo->id;
 
-        $modulo_id = $modulo->id;
+        }
 
         $view = view('factura.facturaAeronautica.create', compact('factura', 'condicionPago', 'modulo_id', 'modulo', 'aplica_minimo_aterrizaje', 'aplica_minimo_estacionamiento', 'diasVencimientoCred'))->with(['despegue_id' => $despegue->id]);
 

@@ -18,7 +18,12 @@
 		<!-- general form elements -->
 		<div class="box box-primary">
 			<div class="box-header">
+				@if ($modulo->nombre == "EXONERADO")
+				<h3 class="box-title">{{$modulo->descripcion}} </h3>
+				@else
 				<h3 class="box-title">{{$modulo->nombre}} (Facturas por Cobrar)</h3>
+					
+				@endif
 				<span class="pull-right"><a class="btn btn-primary"  href="{{action('CobranzaController@create', [$modulo->nombre]) }}">Cobrar</a></span>
 				<span class="pull-right" ><a class="btn btn-success"  style="margin-right: 5px" href="{{ action('CobranzaController@index', [$modulo->nombre]) }}">Consultar</a></span>
 			</div><!-- /.box-header -->
@@ -41,18 +46,33 @@
 							<td colspan="7" class="text-center">No hay facturas registradas en este módulo</td>
 						</tr>
 						@endif
-						@foreach($modulo->facturas()->where('estado', 'P')->orderBy('id', 'DESC')->limit(15)->get() as $factura)
-						<tr>
-							<td>{{$factura->nFacturaPrefix}}-{{$factura->nFactura}}</td>
-							<td>{{$factura->nControlPrefix}}-{{$factura->nControl}}</td>
-							<td style="text-align:left">{{$factura->cliente->nombre}}</td>
-							<td style="text-align:left">{{$factura->descripcion}}</td>
-							<td style="text-align:right">{{$traductor->format($factura->total)}}</td>
-							<td style="text-align:right">{{$traductor->format($factura->total-(($factura->metadata)?$factura->metadata->total:0))}}</td>
-							<td style="text-align:right">{{$factura->fecha}}</td>
-							<td >{{$factura->fechaVencimiento}}</td>
-						</tr>
-						@endforeach
+						@if ($modulo->nombre == "EXONERADO")
+							@foreach($modulo->facturas()->where('condicionPago', 'Exonerado')->orderBy('id', 'DESC')->limit(15)->get() as $factura)
+							<tr>
+								<td>{{$factura->nFacturaPrefix}}-{{$factura->nFactura}}</td>
+								<td>{{$factura->nControlPrefix}}-{{$factura->nControl}}</td>
+								<td style="text-align:left">{{$factura->cliente->nombre}}</td>
+								<td style="text-align:left">{{$factura->descripcion}}</td>
+								<td style="text-align:right">{{$traductor->format($factura->total)}}</td>
+								<td style="text-align:right">{{$traductor->format($factura->total-(($factura->metadata)?$factura->metadata->total:0))}}</td>
+								<td style="text-align:right">{{$factura->fecha}}</td>
+								<td >{{$factura->fechaVencimiento}}</td>
+							</tr>
+							@endforeach
+						@else
+							@foreach($modulo->facturas()->where('estado', 'P')->orderBy('id', 'DESC')->limit(15)->get() as $factura)
+							<tr>
+								<td>{{$factura->nFacturaPrefix}}-{{$factura->nFactura}}</td>
+								<td>{{$factura->nControlPrefix}}-{{$factura->nControl}}</td>
+								<td style="text-align:left">{{$factura->cliente->nombre}}</td>
+								<td style="text-align:left">{{$factura->descripcion}}</td>
+								<td style="text-align:right">{{$traductor->format($factura->total)}}</td>
+								<td style="text-align:right">{{$traductor->format($factura->total-(($factura->metadata)?$factura->metadata->total:0))}}</td>
+								<td style="text-align:right">{{$factura->fecha}}</td>
+								<td >{{$factura->fechaVencimiento}}</td>
+							</tr>
+							@endforeach
+						@endif
 					</tbody>
 				</table>
 			</div><!-- /.box-body -->
