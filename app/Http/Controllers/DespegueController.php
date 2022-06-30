@@ -412,12 +412,13 @@ class DespegueController extends Controller
 
         $euro                  = MontosFijo::where('aeropuerto_id', session('aeropuerto')->id)->first()->euro_oficial;
         $condicionPago          = $despegue->condicionPago;
-        if ($condicionPago = 'Exonerado') {
+        if ($condicionPago == 'Exonerado') {
             $modulo                 = \App\Modulo::find(26)->nombre;
         }else{
             $modulo                 = \App\Modulo::find(5)->nombre;
-
+            
         }
+        // dd($condicionPago );
         $peso                   = ($despegue->aterrizaje->aeronave->peso) / 1000;
         $peso_aeronave          = ceil($peso);
         $mensajeEstacionamiento = ' ';
@@ -1128,7 +1129,6 @@ class DespegueController extends Controller
             $modulo_id = $modulo->id;
 
         }
-
         $view = view('factura.facturaAeronautica.create', compact('factura', 'condicionPago', 'modulo_id', 'modulo', 'aplica_minimo_aterrizaje', 'aplica_minimo_estacionamiento', 'diasVencimientoCred'))->with(['despegue_id' => $despegue->id]);
 
         if (isset($feriado)) $mensajeEstacionamiento = $mensajeEstacionamiento . ' ' . $feriado->porcentaje . '% de cobro adicional por concepto de feriado';

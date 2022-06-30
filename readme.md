@@ -39,12 +39,14 @@ Proyecto laravel para el aeropuerto manuel piar puerto ordaz
 `scp root@172.16.2.108:/var/www/html/nombre_del_exportado.sql Descargas`
 Ingresar la password del user , en este caso Centos2015
 
+
 ### Importar base de datos (Ingresar la base de datos al local)
 1. Realizar el backup del server 
 2. Mover el backup al proyecto, y abrir una terminal dentro del proyecto
 3. copiar el archivo sql al contenedor `sudo docker cp nombre_del_exportado.sql mysql-5.6:/` 
 4. Entrar a la consola del contenedor docker `sudo docker exec -it mysql-5.6 /bin/bash`
-5. Ejecutar comando de importacion `mysql -uroot -p saar < bddfbo.sql` (para alfonzzoj la la pw root es root)
+5. Drop a bdd saar (con cuidado si es en local o server ), crear base de datos (todo por dbveaver)
+6. Ejecutar comando de importacion `mysql -uroot -p saar < nombre_del_exportado.sql` (para alfonzzoj la la pw root es root)
 
 
 ## Comandos necesarios para ejecutar el proyecto en linux:

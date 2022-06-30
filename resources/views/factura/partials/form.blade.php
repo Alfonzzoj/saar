@@ -11,7 +11,7 @@
 		@if(!isset($bloqueoDosa))
 			{!! Form::hidden('aplica_minimo_aterrizaje', 0) !!}
 			{!! Form::hidden('aplica_minimo_estacionamiento', 0) !!}
-			@if($modulo_id=="9" || $modulo_id=="4" || $modulo_id == "2")
+			@if($modulo_id=="9" || $modulo_id=="4" || $modulo_id == "2" || $modulo_id == "26")
 				{!! Form::select('condicionPago', ["Contado"=>"Contado","Crédito" => "Crédito","Exonerado" => "Exonerado"], null, [ 'id' =>'condicionPago', 'class'=>"form-control", $disabled, (!$factura->isImpresa)?"":"readonly"]) !!}
 			@else
 				{!! Form::select('condicionPago', ["Crédito" => "Crédito", "Contado"=>"Contado","Exonerado" => "Exonerado"], null, [ 'id' =>'condicionPago', 'class'=>"form-control", $disabled, (!$factura->isImpresa)?"":"readonly"]) !!}

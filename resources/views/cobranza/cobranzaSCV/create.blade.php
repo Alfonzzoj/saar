@@ -410,7 +410,7 @@ function calculateTotalRetencion(){
 		}
 	});
 	$('#total-modal-input').val(numToComma(total));
-
+	$("#total-modal-input").attr("readonly", false); 
 }
 
 function calculateTotalPagar(){
