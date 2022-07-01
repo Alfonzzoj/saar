@@ -38,6 +38,33 @@
 							<td colspan="5">No hay facturas registradas en este módulo</td>
 						</tr>
 						@endif
+						@if ($modulo->nombre == "EXONERADO")
+							@foreach($exoneradas as $factura)
+							<tr>
+								<td>{{$factura->nFacturaPrefix}}-{{$factura->nFactura}}</td>
+								<td>{{$factura->nControlPrefix}}-{{$factura->nControl}}</td>
+								<td style="text-align:left">{{$factura->cliente->nombre}}</td>
+								<td style="text-align:left">{{$factura->descripcion}}</td>
+								<td style="text-align:right">{{$traductor->format($factura->total)}}</td>
+								<td style="text-align:right">{{$traductor->format($factura->total-(($factura->metadata)?$factura->metadata->total:0))}}</td>
+								{{-- <td style="text-align:right">{{$factura->fecha}}</td> --}}
+								{{-- <td >{{$factura->fechaVencimiento}}</td> --}}
+							</tr>
+							@endforeach
+						@elseif($modulo->nombre == "ANULADAS")
+						@foreach($anuladas as $factura)
+						<tr>
+							<td>{{$factura->nFacturaPrefix}}-{{$factura->nFactura}}</td>
+							<td>{{$factura->nControlPrefix}}-{{$factura->nControl}}</td>
+							<td style="text-align:left">{{$factura->cliente->nombre}}</td>
+							<td style="text-align:left">{{$factura->descripcion}}</td>
+							<td style="text-align:right">{{$traductor->format($factura->total)}}</td>
+							<td style="text-align:right">{{$traductor->format($factura->total-(($factura->metadata)?$factura->metadata->total:0))}}</td>
+							<td style="text-align:right">{{$factura->fecha}}</td>
+							<td >{{$factura->fechaVencimiento}}</td>
+						</tr>
+						@endforeach
+						@else
 						@foreach($modulo->facturas()->where('estado', 'P')->orderBy('id', 'DESC')->limit(15)->get() as $factura)
 						<tr>
 							<td>{{$factura->nFacturaPrefix}}-{{$factura->nFactura}}</td>
@@ -48,6 +75,9 @@
 							<td style="text-align: right">{{$traductor->format($factura->total)}}</td>
 						</tr>
 						@endforeach
+						@endif
+
+						
 					</tbody>
 				</table>
 			</div><!-- /.box-body -->

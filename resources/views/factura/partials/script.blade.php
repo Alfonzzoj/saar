@@ -1,3 +1,5 @@
+$('#fbo-select').chosen({width: "100%"})
+
     $('#condicionPago').change(function(e){
         var value=$(this).val();
         $('#concepto-select').val('');

@@ -17,7 +17,6 @@
 			<!-- form start -->
 
 			<div class="box-body"  id="container">
-
 				@include('factura.partials.form', ["disabled"=>"", "bloqueoDosa"=>true])
 
 			</div><!-- /.box-body -->

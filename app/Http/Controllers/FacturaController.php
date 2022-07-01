@@ -208,7 +208,9 @@ class FacturaController extends Controller {
     public function main($moduloNombre){
         $moduloNombre     =($moduloNombre=="Todos")?"%":$moduloNombre;
         $modulos          =$this->getModulos($moduloNombre);
-        return view('factura.main', compact('modulos', 'facturasManuales'));
+        $exoneradas = Factura::where('condicionPago', 'Exonerado')->orderBy('id', 'DESC')->limit(15)->get();
+        $anuladas = Factura::where('estado', 'A')->orderBy('id', 'DESC')->limit(15)->get();
+        return view('factura.main', compact('modulos', 'facturasManuales','exoneradas','anuladas'));
     }
 
 	/**
@@ -368,7 +370,6 @@ class FacturaController extends Controller {
 	 */
 	public function store($moduloNombre, FacturaRequest $request)
 	{
-
         $mensaje="";
 /*        $cp = $request->get('condicionPago');
         $conceptos = \App\Concepto::select('condicionPago')->whereIn('id', $request->get('concepto_id'))->lists('condicionPago');
@@ -416,6 +417,9 @@ class FacturaController extends Controller {
                     $factura->nFactura = $request->nFactura;
                     $dicom = MontosFijo::where('aeropuerto_id', session('aeropuerto')->id)->first()->dolar_oficial;
                     $factura->dicom = $dicom;
+                    $fbo_id = ($request->fbo_id=='')?null:$request->fbo_id;
+                    $factura->fbo_id= $fbo_id;
+
                     $factura->save();
                     /*
                     if ($cliente && $cliente->isEnvioAutomatico == true && $cliente->email != "") {

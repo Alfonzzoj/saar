@@ -5,6 +5,7 @@ use App\Modulo;
 use App\Ajuste;
 use App\Cliente;
 use App\Factura;
+use App\Fbo;
 use App\OtrosCargo;
 use App\Meta;
 use App\Http\Controllers\Controller;
@@ -2167,10 +2168,12 @@ class ReporteController extends Controller {
 
         $modulos =\App\Modulo::all();
         $clientes =\App\Cliente::all();
-        $view=view('reportes.reporteListadoFacturas',compact('clientes', 'modulos'));
+        $fbos = \App\Fbo::all();
+        $view=view('reportes.reporteListadoFacturas',compact('clientes', 'modulos','fbos'));
         if($request->isMethod("post")){
             $facturas=\App\Factura::select('facturas.*');
 
+            
             $aeropuerto   =$request->get('aeropuerto');
             $modulo       =$request->get('modulo', 0);
             if ($modulo==0){
@@ -2195,6 +2198,11 @@ class ReporteController extends Controller {
                     $facturas->where('facturas.aeropuerto_id', $aeropuerto);
                     $facturas->where('facturas.modulo_id', $modulo);
                 }
+                if ($request->input('fbo_id')!='') {
+                    $fbos = \App\Fbo::all();
+                    
+                }
+         
             }
             $desde= $request->get('desde');
             if($desde!="")

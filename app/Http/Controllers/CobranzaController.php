@@ -1,5 +1,6 @@
 <?php namespace App\Http\Controllers;
 
+use App\Cobro;
 use App\Facturametadata;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -132,7 +133,6 @@ class CobranzaController extends Controller {
         $bancos=\App\Banco::with('cuentas')->get();
         $today               = \Carbon\Carbon::now();
         $today->timezone     = 'America/New_York';
-
         return view('cobranza.create',compact('clientes','moduloName', 'bancos','id', 'recibosAnulados', 'today'));
     }
 
@@ -328,7 +328,6 @@ return ["success"=>1, "impresion" => $impresion];
         $ajuste = array_sum($ajuste);
 
         $totalAjuste =($ajuste<0)?abs($ajuste):'0,00';
-
         return view('cobranza.show', compact('cobro', 'moduloNombre', 'totalDepositado', 'totalAjuste'));
     }
 
@@ -543,7 +542,7 @@ return ["success"=>1, "impresion" => $impresion];
             ->where('cliente_id', $cliente->id)
             ->where('aeropuerto_id', session('aeropuerto')->id)
             ->get();
-
+            
         return ["facturas"=>$facturas, "ajuste"=> $ajusteCliente, "ajusteCobros"=> $ajusteCobros];
     }
 

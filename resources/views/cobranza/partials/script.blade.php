@@ -341,6 +341,7 @@ $('#cliente-select').chosen({width: "100%"}).change(function(){
 		url:"{{action('CobranzaController@getFacturasClientes', [$moduloName])}}",
 		data:{codigo:value}
 	}).done(function(response, status, responseObject){
+		{{-- console.log(response) --}}
 		try{
 			var o=JSON.parse(responseObject.responseText);
             console.log(o.ajusteCobros);
@@ -382,6 +383,7 @@ $('#cliente-select').chosen({width: "100%"}).change(function(){
 
 
 		$.each(o.facturas, function(index,value){
+			{{-- console.log(value.metadata) --}}
 			var metadata            =value.metadata;
 			var isRetencionEditable =false;
 			var retencion           =0;
@@ -399,10 +401,11 @@ $('#cliente-select').chosen({width: "100%"}).change(function(){
 				};
 				isRetencionEditable=true;
 			}
-
 			metadata.islrpercentage =isNaN(parseFloat(metadata.islrpercentage))?0:metadata.islrpercentage;
 			metadata.ivapercentage  =isNaN(parseFloat(metadata.ivapercentage))?0:metadata.ivapercentage;
 			var pendiente           =value.total-metadata.total;
+
+			var pendiente 			= (value.condicionPago=="Exonerado")?0:	value.total-metadata.total;	
 			var base                =value.subtotalNeto-metadata.basepagado;
 			var ivaPagado           =value.iva-metadata.ivapagado;
 

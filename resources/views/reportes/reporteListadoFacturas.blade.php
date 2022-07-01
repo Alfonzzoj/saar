@@ -65,6 +65,19 @@
                             </select>                   
                         </div>
                     </div>
+                    <div class="form-group">
+                        <label class="col-md-1 control-label"><strong>Operador de base fija(FBO)</strong></label>
+                        <div class="col-md-6">
+                            <select class="form-control" id="fbo-select" name="fbo_id" autocomplete="off">                                <option value="" selected>--Seleccione una opcion--</option>
+                                @foreach($fbos as $fbo)
+                                <option
+                                    value="{{$fbo->id}}">
+                                    {{$fbo->nombre}}
+                                </option>
+                                @endforeach    
+                            </select>                   
+                        </div>
+                    </div>
                 <div class="form-group">
                     <label class="col-md-1 control-label"><strong>Estatus</strong></label>
                     <div class="col-md-6">
@@ -122,6 +135,9 @@
                                         <th style="vertical-align: middle; width:50px" align="center" class="text-center">
                                             Código
                                         </th>
+                                        <th style="vertical-align: middle; width:50px" align="center" class="text-center">
+                                            Fbo
+                                        </th>
                                         <th style="vertical-align: middle; width:250px" align="center" class="text-center">
                                             Nombre ó Razón Social
                                         </th>
@@ -147,9 +163,10 @@
                                     @foreach($listadoModulo as $nombreModulo)
                                     @if($nombreModulo->nombre  != 'TASAS')
                                     <tr>
-                                       <td colspan="12" class="text-center bg-gray" align="center"><strong>{{ $nombreModulo->nombre }}</strong></td>   
+                                       <td colspan="13" class="text-center bg-gray" align="center"><strong>{{ $nombreModulo->nombre }}</strong></td>   
                                    </tr>
                                    @foreach($facturas as $index => $factura)
+               
                                    @if($factura->modulo_id == $nombreModulo->id )
                                    <tr>
                                     <td style="vertical-align: middle; width:40px" align="center">{{$index+1}}</td>
@@ -158,6 +175,7 @@
                                     <td style="vertical-align: middle; width:80px" align="center" >{{$factura->nControlPrefix}}-{{$factura->nControl}}</td>
                                     <td style="vertical-align: middle; width:60px" align="center" >{{$factura->cliente->cedRifPrefix}}-{{$factura->cliente->cedRif}}</td>
                                     <td style="vertical-align: middle; width:50px" align="center" >{{$factura->cliente->codigo}}</td>
+                                    <td style="vertical-align: middle; width:100px" align="left" >{{$factura->fbo_id}}</td>
                                     <td style="vertical-align: middle; width:250px" align="left" >{{$factura->cliente->nombre}}</td>
                                     <td style="vertical-align: middle; width:250px" align="left">{{$factura->descripcion}}</td>
                                     <td style="vertical-align: middle; width:120px" align="right" class="{{ studly_case($nombreModulo->nombre) }}-subtotal">{{$traductor->format($factura->subtotal)}}</td>
@@ -173,7 +191,7 @@
                                     @endif
                                     @endforeach
                                     <tr class="bg-gray">
-                                        <td colspan="3" align="left" class="text-left"><strong>TOTAL {{ $nombreModulo->nombre }}</strong></td>
+                                        <td colspan="4" align="left" class="text-left"><strong>TOTAL {{ $nombreModulo->nombre }}</strong></td>
                                         <td> - </td>
                                         <td> -  </td>
                                         <td> - </td>
@@ -187,7 +205,7 @@
                                     @endif
                                     @endforeach    
                                     <tr class="bg-gray">
-                                        <td colspan="3" align="left" class="text-left"><strong>TOTAL</strong></td>
+                                        <td colspan="4" align="left" class="text-left"><strong>TOTAL</strong></td>
                                         <td> - </td>
                                         <td> -  </td>
                                         <td> - </td>
@@ -200,7 +218,7 @@
                                     </tr> 
                                     @else
                                     <tr>
-                                        <td colspan="12" class="text-center" align="center">No hay registros para los parámetros seleccionados</td>
+                                        <td colspan="13" class="text-center" align="center">No hay registros para los parámetros seleccionados</td>
                                     </tr>
                                     @endif
 
@@ -473,6 +491,7 @@
 
 })
 $('#cliente-select').chosen({width: "100%"})
+$('#fbo-select').chosen({width: "100%"})
 
 $('#export-btn').click(function(e){
     var table=$('table').clone();

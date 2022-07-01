@@ -103,6 +103,23 @@
 		</div>
 
 	</div>
+	<div class="form-group">
+		<label class="col-md-1 control-label"><strong>FBO</strong></label>
+		<div class="col-md-6">
+			<select class="form-control" id="fbo-select" name="fbo_id" autocomplete="off">                                <option value="" selected>--Seleccione una opcion--</option>
+				@foreach($fbos as $fbo)
+				<option selected
+				value="{{$fbo->id}}">
+				{{$fbo->nombre}}
+			</option>
+				<option
+					value="{{$fbo->id}}">
+					{{$fbo->nombre}}
+				</option>
+				@endforeach    
+			</select>                   
+		</div>
+	</div>
 	@if(!isset($bloqueoDosa)&&!isset($facturaCarga) && !$factura->isImpresa)
 	<div class="form-group">
 		<label for="concepto-input" class="control-label col-xs-1"><strong>Concepto<span class="text-danger">*</span></strong></label>

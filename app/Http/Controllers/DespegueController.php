@@ -407,6 +407,12 @@ class DespegueController extends Controller
         $feriado = DiaFeriado::where('aeropuerto_id', session('aeropuerto')->id)->where('dia', $dia)->where('mes', $mes)->first();
         //Información general de la factura a crear.
         $despegue               = Despegue::find($id);
+        if (($despegue ->fbo_id!=null)) {
+            $fbos = Fbo::where('id','=',$despegue ->fbo_id)->get();
+          }else{
+            $fbos=Fbo::all();
+          }
+       
         $tipo_matricula = $despegue->aterrizaje->aeronave->tipo_id;
         $factura                = new Factura();
 
@@ -1129,7 +1135,7 @@ class DespegueController extends Controller
             $modulo_id = $modulo->id;
 
         }
-        $view = view('factura.facturaAeronautica.create', compact('factura', 'condicionPago', 'modulo_id', 'modulo', 'aplica_minimo_aterrizaje', 'aplica_minimo_estacionamiento', 'diasVencimientoCred'))->with(['despegue_id' => $despegue->id]);
+        $view = view('factura.facturaAeronautica.create', compact('factura', 'condicionPago', 'modulo_id', 'modulo', 'aplica_minimo_aterrizaje', 'aplica_minimo_estacionamiento', 'diasVencimientoCred','fbos'))->with(['despegue_id' => $despegue->id]);
 
         if (isset($feriado)) $mensajeEstacionamiento = $mensajeEstacionamiento . ' ' . $feriado->porcentaje . '% de cobro adicional por concepto de feriado';
 

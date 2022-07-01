@@ -63,3 +63,10 @@ Ingresar la password del user , en este caso Centos2015
 
 - ssh: connect to host 172.16.2.108 port 22: Connection refused
 		No tiene coneccion ethernet
+
+
+## para modificaciones manuales
+
+realizar cambios en cobros de 1 factura (recaudacion/cobranza)
+tablas 
+corbo_facturas, cobros, cobrospagos
