@@ -494,6 +494,7 @@ class FacturaController extends Controller {
 	 */
 	public function edit($modulo, Factura $factura)
 	{
+        $fbos = Fbo::all();
 
         $nFacturaPrefixManual = \App\Modulo::where('nombre', $modulo)->first()->nFacturaPrefixManual;
         if($factura->nFacturaPrefix == $nFacturaPrefixManual){
@@ -510,7 +511,7 @@ class FacturaController extends Controller {
 
             $diasVencimientoCred = \App\OtrasConfiguraciones::where('aeropuerto_id', session('aeropuerto')->id)->first()->diasVencimientoCred;
 
-            return view('factura.facturaManual.partials.edit', compact('factura', 'modulo', 'modulo_id', 'diasVencimientoCred', 'nControlPrefix', 'nFacturaPrefix', 'clientes'));
+            return view('factura.facturaManual.partials.edit', compact('factura', 'modulo', 'modulo_id', 'diasVencimientoCred', 'nControlPrefix', 'nFacturaPrefix', 'clientes','fbos'));
 
         }
 
@@ -523,7 +524,7 @@ class FacturaController extends Controller {
 
         $diasVencimientoCred = \App\OtrasConfiguraciones::where('aeropuerto_id', session('aeropuerto')->id)->first()->diasVencimientoCred;
 
-        return view('factura.edit', compact('factura', 'modulo', 'modulo_id', 'diasVencimientoCred'));
+        return view('factura.edit', compact('factura', 'modulo', 'modulo_id', 'diasVencimientoCred','fbos'));
     }
 
 	/**
