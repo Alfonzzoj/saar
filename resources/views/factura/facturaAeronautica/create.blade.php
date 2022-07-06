@@ -15,7 +15,6 @@
 				<h3 class="box-title">Creación Dosa</h3>
 			</div><!-- /.box-header -->
 			<!-- form start -->
-
 			<div class="box-body"  id="container">
 				@include('factura.partials.form', ["disabled"=>"", "bloqueoDosa"=>true])
 

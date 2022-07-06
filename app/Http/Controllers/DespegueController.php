@@ -125,14 +125,14 @@ class DespegueController extends Controller
         }
 
         $otrosCargos        = OtrosCargo::where('aeropuerto_id', $aeropuerto)
-            ->where('cantidad_unidades', '<>', 0)
-            ->where('peso_desde', '<=', $peso)
-            ->where('peso_hasta', '>=', $peso)
-            ->where('procedencia', $procedencia)
-            ->where('nacionalidad_matricula', $nacionalidad_matricula)
-            ->where('tipo_matricula', $tipo_matricula)
-            ->orderBy('nombre_cargo')->lists('nombre_cargo', 'id');
-
+        ->where('cantidad_unidades', '<>', 0)
+        ->where('peso_desde', '<=', $peso)
+        ->where('peso_hasta', '>=', $peso)
+        ->where('procedencia', $procedencia)
+        ->where('nacionalidad_matricula', $nacionalidad_matricula)
+        ->where('tipo_matricula', $tipo_matricula);
+        // ->orderBy('nombre_cargo')->pluck('nombre_cargo', 'id');
+        dd($otrosCargos);
         return view("despegues.create", compact("aterrizaje", "hangarLocal", "otrosCargos", "nacionalidad_vuelos", "tipoMatriculas", "aeronaves", "puertos", "pilotos", "today","fbos"));
     }
 
