@@ -124,7 +124,7 @@ class DespegueController extends Controller
             $nacionalidad_matricula = 2; //2 - INTERNACIONAL, NACIONALIDAD VUELO
         }
 
-        $otrosCargos        = OtrosCargo::where('aeropuerto_id', $aeropuerto)
+        $otrosCargos        = OtrosCargo::where('aeropuerto_id', 1)
         ->where('cantidad_unidades', '<>', 0)
         ->where('peso_desde', '<=', $peso)
         ->where('peso_hasta', '>=', $peso)
@@ -132,7 +132,7 @@ class DespegueController extends Controller
         ->where('nacionalidad_matricula', $nacionalidad_matricula)
         ->where('tipo_matricula', $tipo_matricula);
         // ->orderBy('nombre_cargo')->pluck('nombre_cargo', 'id');
-        dd($otrosCargos);
+        // dd($otrosCargos);
         return view("despegues.create", compact("aterrizaje", "hangarLocal", "otrosCargos", "nacionalidad_vuelos", "tipoMatriculas", "aeronaves", "puertos", "pilotos", "today","fbos"));
     }
 
@@ -158,7 +158,7 @@ class DespegueController extends Controller
 
         //print_r(["aterrizaje" => $aterrizaje,"aeropuerto" => $aeropuerto, "procedencia" => $procedencia, "peso" => $peso, "tipo_matricula" => $tipo_matricula, "nacionalidad_matricula" => $nacionalidad_matricula, "conceptosCondicion" => $conceptosCondicion]);
 
-        $otrosCargos        = OtrosCargo::where('aeropuerto_id', $aeropuerto)
+        $otrosCargos        = OtrosCargo::where('aeropuerto_id', 1)
             ->where('cantidad_unidades', '<>', 0)
             ->whereIn('concepto_id', $conceptosCondicion)
             ->where('peso_desde', '<=', $peso)
