@@ -53,14 +53,14 @@
 							@endforeach
 						@elseif($modulo->nombre == "ANULADAS")
 						@foreach($anuladas as $factura)
-						<tr>
+						{{-- <tr>
 							<td>{{$factura->nFacturaPrefix}}-{{$factura->nFactura}}</td>
 							<td>{{$factura->nControlPrefix}}-{{$factura->nControl}}</td>
 							<td style="text-align:left">{{$factura->cliente->nombre}}</td>
 							<td style="text-align:left">{{$factura->descripcion}}</td>
 							<td style="text-align:right">{{$factura->fecha}}</td>
 							<td style="text-align:right">{{$traductor->format($factura->total)}}</td>
-						</tr>
+						</tr> --}}
 						@endforeach
 						@else
 						@foreach($modulo->facturas()->where('estado', 'P')->orderBy('id', 'DESC')->limit(15)->get() as $factura)
