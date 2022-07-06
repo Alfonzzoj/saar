@@ -103,6 +103,7 @@
 		</div>
 
 	</div>
+	@if ($modulo->nombre == "DOSAS")
 	<div class="form-group">
 		<label class="col-md-1 control-label"><strong>FBO</strong></label>
 		<div class="col-md-6">
@@ -117,6 +118,8 @@
 			</select>                   
 		</div>
 	</div>
+	@endif
+
 	@if(!isset($bloqueoDosa)&&!isset($facturaCarga) && !$factura->isImpresa)
 	<div class="form-group">
 		<label for="concepto-input" class="control-label col-xs-1"><strong>Concepto<span class="text-danger">*</span></strong></label>
