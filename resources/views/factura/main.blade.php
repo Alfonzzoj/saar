@@ -58,10 +58,8 @@
 							<td>{{$factura->nControlPrefix}}-{{$factura->nControl}}</td>
 							<td style="text-align:left">{{$factura->cliente->nombre}}</td>
 							<td style="text-align:left">{{$factura->descripcion}}</td>
-							<td style="text-align:right">{{$traductor->format($factura->total)}}</td>
-							<td style="text-align:right">{{$traductor->format($factura->total-(($factura->metadata)?$factura->metadata->total:0))}}</td>
 							<td style="text-align:right">{{$factura->fecha}}</td>
-							<td >{{$factura->fechaVencimiento}}</td>
+							<td style="text-align:right">{{$traductor->format($factura->total)}}</td>
 						</tr>
 						@endforeach
 						@else

@@ -277,10 +277,10 @@ class FacturaController extends Controller {
 
         $modulo=\App\Modulo::where("nombre","like",$moduloNombre)->where('aeropuerto_id', session('aeropuerto')->id)->first();
 
-
         if($estado == 'A'){
-            $modulo->facturas=\App\Factura::onlyTrashed()
-                                            ->select("facturas.*","clientes.nombre as clienteNombre")
+            // $modulo->facturas=\App\Factura::onlyTrashed()
+
+            $modulo->facturas=\App\Factura::select("facturas.*","clientes.nombre as clienteNombre")
                                             ->join('clientes','clientes.id' , '=', 'facturas.cliente_id')
                                             ->where('facturas.modulo_id', "=", $modulo->id)
                                             ->where('facturas.nControl', $nControlOperator, $nControl)
@@ -288,6 +288,8 @@ class FacturaController extends Controller {
                                             ->where('total', $totalOperator, $total)
                                             ->where('fecha', $fechaOperator, $fecha)
                                             ->where('descripcion', 'like', "%$descripcion%")
+                                            ->where('estado', 'like', $estado)
+
                                             ->where('clientes.nombre', 'like', "%$clienteNombre%")
                                             ->where('facturas.aeropuerto_id','=', session('aeropuerto')->id)
                                             ->with('cliente')->groupBy("facturas.nFactura")
@@ -355,9 +357,9 @@ class FacturaController extends Controller {
             return response("No se consiguió el modulo '$modulo' en el aeropuerto de sesion", 500);
         }
         $modulo_id=$modulo->id;
-
+        $fbos = Fbo::all();
         $diasVencimientoCred = \App\OtrasConfiguraciones::where('aeropuerto_id', session('aeropuerto')->id)->first()->diasVencimientoCred;
-		return view('factura.create', compact('factura', 'modulo', 'modulo_id', 'diasVencimientoCred'));
+		return view('factura.create', compact('factura', 'modulo', 'modulo_id','fbos', 'diasVencimientoCred'));
 	}
 
 
@@ -575,7 +577,7 @@ class FacturaController extends Controller {
 
 
         $factura->update(['comentario' => $request->comentario]);
-        $factura->update(['status' => 'Anulada']);
+        // $factura->update(['status' => 'Anulada']);
         $factura->update(['estado' => 'A']);
 
         $despegue = \App\Despegue::where('factura_id', $factura->id)->first();

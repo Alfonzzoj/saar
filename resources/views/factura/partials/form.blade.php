@@ -108,10 +108,7 @@
 		<div class="col-md-6">
 			<select class="form-control" id="fbo-select" name="fbo_id" autocomplete="off">                                <option value="" selected>--Seleccione una opcion--</option>
 				@foreach($fbos as $fbo)
-				<option selected
-				value="{{$fbo->id}}">
-				{{$fbo->nombre}}
-			</option>
+
 				<option
 					value="{{$fbo->id}}">
 					{{$fbo->nombre}}
