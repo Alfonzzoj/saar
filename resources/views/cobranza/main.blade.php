@@ -43,49 +43,117 @@
 					<tbody>
 						@if($modulo->facturas->count()==0)
 						<tr>
-							<td colspan="7" class="text-center">No hay facturas registradas en este módulo</td>
+							<td colspan="5">No hay facturas registradas en este módulo</td>
 						</tr>
 						@endif
 						@if ($modulo->nombre == "EXONERADO")
-							{{-- @foreach($modulo->facturas()->where('condicionPago', 'Exonerado')->orderBy('id', 'DESC')->limit(15)->get() as $factura)
-							<tr>
-								<td>{{$factura->nFacturaPrefix}}-{{$factura->nFactura}}</td>
-								<td>{{$factura->nControlPrefix}}-{{$factura->nControl}}</td>
-								<td style="text-align:left">{{$factura->cliente->nombre}}</td>
-								<td style="text-align:left">{{$factura->descripcion}}</td>
-								<td style="text-align:right">{{$traductor->format($factura->total)}}</td>
-								<td style="text-align:right">{{$traductor->format($factura->total-(($factura->metadata)?$factura->metadata->total:0))}}</td>
-								<td style="text-align:right">{{$factura->fecha}}</td>
-								<td >{{$factura->fechaVencimiento}}</td>
-							</tr>
-							@endforeach --}}
-						@elseif($modulo->nombre == "ANULADAS")
-						{{-- @foreach($modulo->facturas()->where('estado', 'A')->orderBy('id', 'DESC')->limit(15)->get() as $factura)
-						 <tr>
+						@foreach($exoneradas as $factura)
+						<tr>
 							<td>{{$factura->nFacturaPrefix}}-{{$factura->nFactura}}</td>
 							<td>{{$factura->nControlPrefix}}-{{$factura->nControl}}</td>
 							<td style="text-align:left">{{$factura->cliente->nombre}}</td>
 							<td style="text-align:left">{{$factura->descripcion}}</td>
 							<td style="text-align:right">{{$traductor->format($factura->total)}}</td>
-							<td style="text-align:right">{{$traductor->format($factura->total-(($factura->metadata)?$factura->metadata->total:0))}}</td>
+							<td style="text-align:right">
+								{{$traductor->format($factura->total-(($factura->metadata)?$factura->metadata->total:0))}}
+							</td>
+							{{-- <td style="text-align:right">{{$factura->fecha}}</td> --}}
+							{{-- <td>{{$factura->fechaVencimiento}}</td> --}}
+						</tr>
+						@endforeach
+						@elseif($modulo->nombre == "ANULADAS")
+						@foreach($anuladas as $factura)
+						<tr>
+							<td>{{$factura->nFacturaPrefix}}-{{$factura->nFactura}}</td>
+							<td>{{$factura->nControlPrefix}}-{{$factura->nControl}}</td>
+							<td style="text-align:left">{{$factura->cliente->nombre}}</td>
+							<td style="text-align:left">{{$factura->descripcion}}</td>
 							<td style="text-align:right">{{$factura->fecha}}</td>
-							<td >{{$factura->fechaVencimiento}}</td>
-						</tr> -
-						@endforeach --}}
+							<td style="text-align:right">{{$traductor->format($factura->total)}}</td>
+						</tr>
+						@endforeach
+						@elseif($modulo->nombre == "CANON")
+						@foreach($canon as $factura)
+						<tr>
+							<td>{{$factura->nFacturaPrefix}}-{{$factura->nFactura}}</td>
+							<td>{{$factura->nControlPrefix}}-{{$factura->nControl}}</td>
+							<td style="text-align:left">{{$factura->cliente->nombre}}</td>
+							<td style="text-align:left">{{$factura->descripcion}}</td>
+							<td style="text-align:right">{{$factura->fecha}}</td>
+							<td style="text-align:right">{{$traductor->format($factura->total)}}</td>
+						</tr>
+						@endforeach
+						@elseif($modulo->nombre == "DOSAS")
+						@foreach($dosas as $factura)
+						<tr>
+							<td>{{$factura->nFacturaPrefix}}-{{$factura->nFactura}}</td>
+							<td>{{$factura->nControlPrefix}}-{{$factura->nControl}}</td>
+							<td style="text-align:left">{{$factura->cliente->nombre}}</td>
+							<td style="text-align:left">{{$factura->descripcion}}</td>
+							<td style="text-align:right">{{$factura->fecha}}</td>
+							<td style="text-align:right">{{$traductor->format($factura->total)}}</td>
+						</tr>
+						@endforeach
+						@elseif($modulo->nombre == "OTROS INGRESOS NO AERONÁUTICOS")
+						@foreach($otros_ingresos_no_aeronauticos as $factura)
+						<tr>
+							<td>{{$factura->nFacturaPrefix}}-{{$factura->nFactura}}</td>
+							<td>{{$factura->nControlPrefix}}-{{$factura->nControl}}</td>
+							<td style="text-align:left">{{$factura->cliente->nombre}}</td>
+							<td style="text-align:left">{{$factura->descripcion}}</td>
+							<td style="text-align:right">{{$factura->fecha}}</td>
+							<td style="text-align:right">{{$traductor->format($factura->total)}}</td>
+						</tr>
+						@endforeach
+						@elseif($modulo->nombre == "TARJETAS DE IDENTIFICACION")
+						@foreach($tarjetas_identificacion as $factura)
+						<tr>
+							<td>{{$factura->nFacturaPrefix}}-{{$factura->nFactura}}</td>
+							<td>{{$factura->nControlPrefix}}-{{$factura->nControl}}</td>
+							<td style="text-align:left">{{$factura->cliente->nombre}}</td>
+							<td style="text-align:left">{{$factura->descripcion}}</td>
+							<td style="text-align:right">{{$factura->fecha}}</td>
+							<td style="text-align:right">{{$traductor->format($factura->total)}}</td>
+						</tr>
+						@endforeach
+						@elseif($modulo->nombre == "TASAS
+						")
+						@foreach($tasas as $factura)
+						<tr>
+							<td>{{$factura->nFacturaPrefix}}-{{$factura->nFactura}}</td>
+							<td>{{$factura->nControlPrefix}}-{{$factura->nControl}}</td>
+							<td style="text-align:left">{{$factura->cliente->nombre}}</td>
+							<td style="text-align:left">{{$factura->descripcion}}</td>
+							<td style="text-align:right">{{$factura->fecha}}</td>
+							<td style="text-align:right">{{$traductor->format($factura->total)}}</td>
+						</tr>
+						@endforeach
+						@elseif($modulo->nombre == "PUBLICIDAD")
+						@foreach($publicidad as $factura)
+						<tr>
+							<td>{{$factura->nFacturaPrefix}}-{{$factura->nFactura}}</td>
+							<td>{{$factura->nControlPrefix}}-{{$factura->nControl}}</td>
+							<td style="text-align:left">{{$factura->cliente->nombre}}</td>
+							<td style="text-align:left">{{$factura->descripcion}}</td>
+							<td style="text-align:right">{{$factura->fecha}}</td>
+							<td style="text-align:right">{{$traductor->format($factura->total)}}</td>
+						</tr>
+						@endforeach
 						@else
-							@foreach($modulo->facturas()->where('estado', 'P')->orderBy('id', 'DESC')->limit(15)->get() as $factura)
-							<tr>
-								<td>{{$factura->nFacturaPrefix}}-{{$factura->nFactura}}</td>
-								<td>{{$factura->nControlPrefix}}-{{$factura->nControl}}</td>
-								<td style="text-align:left">{{$factura->cliente->nombre}}</td>
-								<td style="text-align:left">{{$factura->descripcion}}</td>
-								<td style="text-align:right">{{$traductor->format($factura->total)}}</td>
-								<td style="text-align:right">{{$traductor->format($factura->total-(($factura->metadata)?$factura->metadata->total:0))}}</td>
-								<td style="text-align:right">{{$factura->fecha}}</td>
-								<td >{{$factura->fechaVencimiento}}</td>
-							</tr>
-							@endforeach
+						{{-- DOSAS --}}
+						@foreach($modulo->facturas()->where('estado', 'P')->orderBy('id', 'DESC')->limit(15)->get() as
+						$factura) 
+						<tr>
+							<td>{{$factura->nFacturaPrefix}}-{{$factura->nFactura}}</td>
+							<td>{{$factura->nControlPrefix}}-{{$factura->nControl}}</td>
+							<td style="text-align: left">{{$factura->cliente->nombre}}</td>
+							<td style="text-align: left">{{$factura->descripcion}}</td>
+							<td>{{$factura->fecha}}</td>
+							<td style="text-align: right">{{$traductor->format($factura->total)}}</td>
+						</tr>
+						@endforeach
 						@endif
+
 					</tbody>
 				</table>
 			</div><!-- /.box-body -->

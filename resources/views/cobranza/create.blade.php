@@ -250,6 +250,7 @@
 			var nRecibo   =$('#nRecibo-input').val();
 			var fecha     =$('#fecha-datepicker').val();
 			var condicion =$('#cliente-select option:selected').data("condicion");
+			console.log(condicion)
 
 
 		    /*if(nRecibo=='' && condicion=="Crédito"){
@@ -324,6 +325,7 @@
             }).done(function(data, status, jx){
                 try{
                     var response=JSON.parse(jx.responseText);
+					console.log(data)
                     if(response.success==1){
 						alertify.success("Cobranza realizada con éxito.");
 						alertify.confirm("¿Desea imprimir el Recibo de Caja", function (e) {

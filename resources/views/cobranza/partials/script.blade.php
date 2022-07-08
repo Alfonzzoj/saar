@@ -341,9 +341,10 @@ $('#cliente-select').chosen({width: "100%"}).change(function(){
 		url:"{{action('CobranzaController@getFacturasClientes', [$moduloName])}}",
 		data:{codigo:value}
 	}).done(function(response, status, responseObject){
-		{{-- console.log(response) --}}
+		console.log(response.facturas)
 		try{
 			var o=JSON.parse(responseObject.responseText);
+			{{-- console.log("F:   "+ ) --}}
             console.log(o.ajusteCobros);
             console.log(o.ajuste);
 			var cobro=[];

@@ -206,11 +206,20 @@ class FacturaController extends Controller {
 
 
     public function main($moduloNombre){
+         
         $moduloNombre     =($moduloNombre=="Todos")?"%":$moduloNombre;
         $modulos          =$this->getModulos($moduloNombre);
         $exoneradas = Factura::where('condicionPago', 'Exonerado')->orderBy('id', 'DESC')->limit(15)->get();
         $anuladas = Factura::where('estado', 'A')->orderBy('id', 'DESC')->limit(15)->get();
-        return view('factura.main', compact('modulos', 'facturasManuales','exoneradas','anuladas'));
+        $canon = Factura::where('modulo_id','=',2)->orderBy('id', 'DESC')->limit(15)->get();
+        $dosas = Factura::where('modulo_id','=',5)->orderBy('id', 'DESC')->limit(15)->get();
+        $otros_ingresos_no_aeronauticos = Factura::where('modulo_id','=',8)->orderBy('id', 'DESC')->limit(15)->get();
+        $tarjetas_identificacion = Factura::where('modulo_id','=',7)->orderBy('id', 'DESC')->limit(15)->get();
+        $tasas = Factura::where('modulo_id','=',22)->orderBy('id', 'DESC')->limit(15)->get();
+        // $tasas = Factura::where('modulo_id','=',22)->where('aeropuerto_id','=',session('aeropuerto')->id)->orderBy('id', 'DESC')->limit(15)->get();
+
+        $publicidad = Factura::where('modulo_id','=',9)->orderBy('id', 'DESC')->limit(15)->get();
+        return view('factura.main', compact('modulos', 'facturasManuales','exoneradas','anuladas','canon','tarjetas_identificacion','dosas','otros_ingresos_no_aeronauticos','publicidad','tasas'));
     }
 
 	/**

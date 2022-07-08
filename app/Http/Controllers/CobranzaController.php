@@ -6,6 +6,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Traits\DecimalConverterTrait;
+use \App\Factura;
 
 class CobranzaController extends Controller {
 
@@ -19,7 +20,22 @@ class CobranzaController extends Controller {
     public function main($moduloNombre){
         $moduloNombre=($moduloNombre=="Todos")?"%":$moduloNombre;
         $modulos=$this->getModulos($moduloNombre);
-        return view('cobranza.main', compact('modulos'));
+        $exoneradas = Factura::where('condicionPago', 'Exonerado')->orderBy('id', 'DESC')->limit(7)->get();
+        $anuladas = Factura::where('estado', 'A')->orderBy('id', 'DESC')->limit(7)->get();
+
+        $canon = Factura::where('modulo_id','=',2)->orderBy('id', 'DESC')->limit(7)->get();
+        $dosas = Factura::where('modulo_id','=',5)->orderBy('id', 'DESC')->limit(7)->get();
+        $otros_ingresos_no_aeronauticos = Factura::where('modulo_id','=',8)->orderBy('id', 'DESC')->limit(7)->get();
+        $tarjetas_identificacion = Factura::where('modulo_id','=',7)->orderBy('id', 'DESC')->limit(7)->get();
+        $tasas = Factura::where('modulo_id','=',22)->orderBy('id', 'DESC')->limit(7)->get();
+
+        $publicidad = Factura::where('modulo_id','=',9)->orderBy('id', 'DESC')->limit(7)->get();
+        return view('cobranza.main', compact('modulos', 'facturasManuales','exoneradas','anuladas','canon','tarjetas_identificacion','dosas','otros_ingresos_no_aeronauticos','publicidad','tasas'));
+
+
+
+
+        // return view('cobranza.main', compact('modulos'));
     }
 
 	/**
@@ -542,7 +558,20 @@ return ["success"=>1, "impresion" => $impresion];
             ->where('cliente_id', $cliente->id)
             ->where('aeropuerto_id', session('aeropuerto')->id)
             ->get();
-            
+
+
+        $facturas=\App\Factura::with('metadata')
+        ->where('cliente_id', $cliente->id)
+        ->where('modulo_id', $idOperator, $id)
+        ->where('aeropuerto_id', session('aeropuerto')->id)
+        ->where('estado','=', 'P')
+        ->groupBy("facturas.id")
+        ->get();
+        
+        // $facturas = $facturas->where('estado','=', 'P');
+
+
+
         return ["facturas"=>$facturas, "ajuste"=> $ajusteCliente, "ajusteCobros"=> $ajusteCobros];
     }
 
